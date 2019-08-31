@@ -1,0 +1,35 @@
+<h1>全ての投稿一覧</h1>
+<h2>ログインしないと何もできませんよ</h2>
+
+<table>
+  <tr>
+    <th>タイトル</th>
+    <th>内容</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.text %></td>
+      <td><%= link_to '詳細', post %></td>
+      <td><%= link_to '編集', edit_post_path(post) %></td>
+      <td><%= link_to '削除', post_path(post), method: :delete, data: { confirm: '削除しますか？' } %></td>
+
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to '新しい投稿', new_post_path %>
+<% if user_signed_in? %>
+        <div class="user_nav grid-6">
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+        </div>
+      <% else %>
+        <div class="grid-6">
+          <%= link_to "ログイン", new_user_session_path, class: 'post' %>
+          <%= link_to "新規登録", new_user_registration_path, class: 'post' %>
+        </div>
+      <% end %>
+
